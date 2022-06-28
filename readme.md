@@ -14,5 +14,6 @@ Ce collègue vous demande de l'améliorer afin qu'il puisse jouer à tous les ni
 ## Prérequis : 
 
 1) Installer vizdoom (cf : https://github.com/mwydmuch/ViZDoom)
-2) Cloner le repository de vizdoom dans un répertoire github
+2) Cloner le repository de vizdoom dans un répertoire github à la racine de ce projet. 
+3) Installer les dépendances nécessaires soit via le requirement soit manuellement (manuellement conseillé dans ce cas vu la nature des dépendances)
 
