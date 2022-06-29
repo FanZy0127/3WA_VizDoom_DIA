@@ -6,7 +6,7 @@ Vous travaillez pour PGM Company, une société spécialisée dans la création 
 
 Ce collègue vous demande de l'améliorer afin qu'il puisse jouer à tous les niveaux de doom et faire le score maximal. 
 
-## Objectifs
+## Objectifs :
 
 * Améliorer l'algorithme afin qu'il finisse tous les niveaux de doom (en se basant sur le third_main, les deux autres mains ont été laissés pour votre familiarisation avec Vizdoom)
 * Utiliser de la détection de forme pour améliorer votre bot et minimiser le nombre de munitions utilisées.
