@@ -94,7 +94,7 @@ class VizDoomGym(Env):
 
         return state, reward, done, info
 
-    # définit ce qui se passe quand on fait une nouvelle partie
+    # Method defining the behavior when we reset the game
     def reset(self):
         # Reset des valeurs des variables
         self.damage_taken = 0
