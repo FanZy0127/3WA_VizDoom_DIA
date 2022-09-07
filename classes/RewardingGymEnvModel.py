@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from vizdoom import *
-# Usefull constants
+# Import of the main constants
 from DoomAi.utils.consts.consts import *
 from DoomAi.utils.consts.deadly_corridor import *
 # OpenAI Gym
@@ -25,7 +25,7 @@ class GymEnv(Env):
         # Create a vector list represent the actions.
         self.actions = np.identity(n_actions, dtype=np.uint8)
 
-        # Game Variables : HEALTH, DAMAGE_TAKEN, HITCOUNT, SELECTED_WEAPON_AMMO
+        # Game Variables : HEALTH, DAMAGE_TAKEN, DAMAGECOUNT, SELECTED_WEAPON_AMMO
         self.damage_taken = DAMAGE_TAKEN
         self.damage_count = DAMAGECOUNT
         self.ammo = AMMO

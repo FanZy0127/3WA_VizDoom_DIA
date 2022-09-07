@@ -68,8 +68,10 @@ class GymEnv(Env):
     # Reset the game
     def reset(self):
         self.game.new_episode()
+
         screen = self.game.get_state().screen_buffer
         screen = self.grayscale(screen)
+
         return screen
 
     # Grayscale the game frame and resize it for better computation time

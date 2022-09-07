@@ -23,7 +23,7 @@ N_TIMESTEPS = 100000
 SCENARIO_PATH = 'SCENARIO_PATH'
 IS_REWARD_SHAPED = 'IS_REWARD_SHAPED'
 
-GAME_LEVELS = [
+GAME_STAGES = [
     'basic',
     'defend_the_center',
     'deadly_corridor'
