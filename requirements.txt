@@ -6,3 +6,7 @@ torch
 torchvision
 torchaudio
 stable-baselines3[extra]
+typer
+rich
+importlib
+tensorboard

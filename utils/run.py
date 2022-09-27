@@ -5,7 +5,7 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
 
 
-class Run():
+class Run:
     def __init__(self, level_name):
         self.level_name = level_name
         self.load_constants()
@@ -14,13 +14,12 @@ class Run():
         env = self.get_env()
         model = PPO.load(self.model_path)
         mean_reward, _ = evaluate_policy(model, env, n_eval_episodes=N_EVAL_EPISODES)
-
+        print(mean_reward)
         return mean_reward
 
     def get_env(self):
         module = importlib.import_module(f"classes.{self.model_name}")
         env = module.GymEnv(self.scenario_path, n_actions=self.n_actions, render=True, hd=True)
-
         return env
 
     def load_constants(self):

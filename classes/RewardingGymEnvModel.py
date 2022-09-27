@@ -1,16 +1,28 @@
-import cv2
+import time
 import numpy as np
+import cv2
+# VizDoom
 from vizdoom import *
-# Import of the main constants
-from DoomAi.utils.consts.consts import *
-from DoomAi.utils.consts.deadly_corridor import *
 # OpenAI Gym
 from gym import Env
 from gym.spaces import Discrete, Box
+from DoomAi.utils.consts.consts import *
 
 
 class GymEnv(Env):
-    def __init__(self, scenario_path=SCENARIO_PATH, n_actions=N_ACTIONS, render=False, hd=False):
+    def render(self, mode="human"):
+        pass
+
+    def __init__(self,
+                 scenario_path,
+                 n_actions=N_ACTIONS,
+                 damage_taken_delta_w=DAMAGE_TAKEN_DELTA_WEIGHT,
+                 hitcount_delta_w=HITCOUNT_DELTA_WEIGHT,
+                 ammo_delta_w=AMMO_DELTA_WEIGHT,
+                 movement_w=MOVEMENT_W,
+                 logging=False,
+                 render=False,
+                 hd=False):
         # Inherit from Env
         super().__init__()
 
@@ -18,6 +30,7 @@ class GymEnv(Env):
         self.game = DoomGame()
         self.game.load_config(scenario_path)
 
+        self.logging = logging
         self.n_actions = n_actions
         self.observation_space = Box(low=LOW, high=HIGH, shape=OBSERVATION_SPACE_SHAPE, dtype=np.uint8)
         self.action_space = Discrete(n_actions)
@@ -25,10 +38,16 @@ class GymEnv(Env):
         # Create a vector list represent the actions.
         self.actions = np.identity(n_actions, dtype=np.uint8)
 
-        # Game Variables : HEALTH, DAMAGE_TAKEN, DAMAGECOUNT, SELECTED_WEAPON_AMMO
-        self.damage_taken = DAMAGE_TAKEN
-        self.damage_count = DAMAGECOUNT
-        self.ammo = AMMO
+        # Game Variables : HEALTH, DAMAGE_TAKEN, HITCOUNT, SELECTED_WEAPON_AMMO
+        self.damage_taken = 0
+        self.hitcount = 0
+        self.ammo = 52
+
+        # Reward Shaping Weight
+        self.movement_w = movement_w
+        self.damage_taken_delta_w = damage_taken_delta_w
+        self.hitcount_delta_w = hitcount_delta_w
+        self.ammo_delta_w = ammo_delta_w
 
         # Render frame configuration
         if not render:
@@ -45,8 +64,12 @@ class GymEnv(Env):
         # Check if the action is legit
         assert action >= 0 & action <= self.n_actions
 
-        # Make an action, then wait {{SKIP_FRAMES}} frames
-        game_reward = self.game.make_action(self.actions[action], SKIP_FRAMES)
+        # Make an action, then wait 10 frames for loggin
+        game_reward = self.game.make_action(self.actions[action])
+
+        if self.logging:
+            time.sleep(0.3)
+
         reward = game_reward
 
         # Get all the stuff we need to return
@@ -60,7 +83,7 @@ class GymEnv(Env):
 
             # Reward Shaping
             game_variables = state.game_variables
-            health, damage_taken, damage_count, ammo = game_variables
+            health, damage_taken, hitcount, ammo = game_variables
 
             # Calculate Rewards Delta
             # sd=10dp & d=20dp => -20 + 10 = -10
@@ -70,23 +93,42 @@ class GymEnv(Env):
 
             # 0 & 1 = 1 - 0 = 1
             # Make understand the agent that they have to shoot at the targets
-            damage_count_delta = damage_count - self.damage_count
-            self.damage_count = damage_count
+            hitcount_delta = hitcount - self.hitcount
+            self.hitcount = hitcount
 
             # 60 & 59 => 59 - 60 => -1
             # Make understand the agent that it is necessary to avoid shooting in the void
             ammo_delta = ammo - self.ammo
             self.ammo = ammo
 
-            reward = (game_reward + damage_taken_delta * DAMAGE_TAKEN_DELTA_WEIGHT + damage_count_delta *
-                      DAMAGECOUNT_DELTA_WEIGHT + ammo_delta * AMMO_DELTA_WEIGHT)
+            movement_reward = game_reward * self.movement_w
+            damage_reward = damage_taken_delta * self.damage_taken_delta_w
+            hitcount_reward = hitcount_delta * self.hitcount_delta_w
+            ammo_reward = ammo_delta * self.ammo_delta_w
+
+            reward = movement_reward + damage_reward + hitcount_reward + ammo_reward
+
+            if self.logging:
+                print('##########################')
+                print(f'Action Number: {action}')
+                print(f'Health {health}')
+                print(f'Ammo Left: {ammo}')
+                print(f'Damage Taken: {damage_taken}')
+                print(f'Hitcount: {hitcount}')
+                print(f'Movement Reward: {movement_reward}')
+                print(f'Damage Taken Reward: {damage_reward}')
+                print(f'Hitcount Reward: {hitcount_reward}')
+                print(f'Ammo Reward: {ammo_reward}')
+                print(f'Total Reward: {reward}')
+                print('##########################')
 
             info = {
                 "ammo": ammo,
                 "health": health,
                 "damage_taken": damage_taken,
-                "damage_count": damage_count
+                "hitcount": hitcount
             }
+
         else:
             screen = np.zeros(self.observation_space.shape)  # List of 0 with shape of the observation_space
             info = dict()
@@ -96,22 +138,20 @@ class GymEnv(Env):
     # Reset the game
     def reset(self):
         # Reset Games Variables before start a new game
-        self.damage_taken = DAMAGE_TAKEN
-        self.damage_count = DAMAGECOUNT
-        self.ammo = AMMO
+        self.damage_taken = 0
+        self.hitcount = 0
+        self.ammo = 52
         self.game.new_episode()
-
         screen = self.game.get_state().screen_buffer
         screen = self.grayscale(screen)
-
         return screen
 
     # Grayscale the game frame and resize it for better computation time
     @staticmethod
     def grayscale(observation):
         gray = cv2.cvtColor(np.moveaxis(observation, 0, -1), cv2.COLOR_BGR2GRAY)
-        resize = cv2.resize(gray, (
-            OBSERVATION_SPACE_SHAPE[1], OBSERVATION_SPACE_SHAPE[0]), interpolation=cv2.INTER_CUBIC)
+        resize = cv2.resize(gray, (OBSERVATION_SPACE_SHAPE[1],
+                                   OBSERVATION_SPACE_SHAPE[0]), interpolation=cv2.INTER_CUBIC)
         screen = np.reshape(resize, OBSERVATION_SPACE_SHAPE)
         return screen
 

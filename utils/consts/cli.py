@@ -2,6 +2,7 @@ PLAY = 1
 TRAIN = 2
 TRAIN_SELECTION = '[bold red]WHAT LEVEL DO YOU WANT TO TRAIN ? \n{}[/bold red]'
 SELECT_AN_OPTION = 'Select an option. Default'
+SELECT_A_DIFFICULTY = "CHOOSE YOUR DIFFICULTY (1 to {})"
 INVALID_CHOICE = 'Invalid choice'
 WELCOME = f'''[bold red]
 ##############################################################################
