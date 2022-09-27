@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/defend_the_center.cfg'  # Game Scenario Path
-LOG_DIR = 'utils/logs/defend_the_center'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'utils/train/defend_the_center'  # Checkpoint Directory
+LOG_DIR = 'utils/logs/log_defend_the_center'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'utils/train/train_defend_the_center'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/defend_the_center/best_model_100000.zip'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

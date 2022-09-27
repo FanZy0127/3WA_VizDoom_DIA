@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/take_cover.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/take_cover'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/take_cover'  # Checkpoint Directory
+LOG_DIR = 'logs/log_take_cover'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_take_cover'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/take_cover_2709'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

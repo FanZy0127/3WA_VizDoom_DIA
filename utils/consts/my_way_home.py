@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/my_way_home.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/my_way_home'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/my_way_home'  # Checkpoint Directory
+LOG_DIR = 'logs/log_my_way_home'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_my_way_home'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/my_way_home_2709'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

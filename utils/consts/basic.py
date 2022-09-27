@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/basic.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/basic'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/basic'  # Checkpoint Directory
+LOG_DIR = 'logs/log_basic'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_basic'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/basic/best_model_100000.zip'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

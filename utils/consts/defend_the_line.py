@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/defend_the_line.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/defend_the_line'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/defend_the_line'  # Checkpoint Directory
+LOG_DIR = 'logs/log_defend_the_line'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_defend_the_line'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/defend_the_line_2709'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

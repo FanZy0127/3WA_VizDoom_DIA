@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/predict_position.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/predict_position'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/predict_position'  # Checkpoint Directory
+LOG_DIR = 'logs/log_predict_position'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_predict_position'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/predict_position_2709'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3

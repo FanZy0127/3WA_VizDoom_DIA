@@ -1,6 +1,6 @@
 SCENARIO_PATH = 'utils/scenarii/health_gathering.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/health_gathering'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/health_gathering'  # Checkpoint Directory
+LOG_DIR = 'logs/log_health_gathering'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_health_gathering'  # Checkpoint Directory
 MODEL_PATH = 'utils/models/health_gathering_2709'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3
