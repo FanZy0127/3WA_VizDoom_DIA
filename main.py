@@ -1,7 +1,6 @@
 import typer
 from rich import print
 from rich.table import Table
-
 from utils.consts.cli import *
 from utils.consts.consts import *
 

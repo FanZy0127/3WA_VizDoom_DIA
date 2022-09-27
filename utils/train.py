@@ -6,7 +6,7 @@ from stable_baselines3.common import env_checker
 from stable_baselines3 import PPO
 
 
-class Train():
+class Train:
     def __init__(self, level_name):
         self.level_name = level_name
         self.curriculum_paths = []
