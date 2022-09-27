@@ -5,7 +5,7 @@ OBSERVATION_SPACE_SHAPE = (100, 160, 1)  # Target shape for the CNN
 SKIP_FRAMES = 4  # Number of frames to skip
 SAVE_MODEL_FREQUENCY = 10000  # Frequency to save the model
 N_EVAL_EPISODES = 20  # Number of episodes to evaluate the model
-VERSBOSE = 2 # Verbose level for the model
+VERSBOSE = 2  # Verbose level for the model
 
 # Gym Box Configuration
 LOW = 0
