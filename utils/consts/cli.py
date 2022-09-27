@@ -18,7 +18,7 @@ WELCOME = f'''[bold red]
 
 Author: @BaptisteHaramboure
 Description: Reinforcement Learning for VizDoom using OpenAI Gym
-Last update: 2022-07-09
+Last update: 2022-27-09
 ##############################################################################
 WHAT DO YOU WANT TO DO?
 1. Play with a trained model
