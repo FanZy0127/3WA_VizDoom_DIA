@@ -16,10 +16,10 @@ class GymEnv(Env):
     def __init__(self,
                  scenario_path,
                  n_actions=N_ACTIONS,
-                 damage_taken_delta_w=DAMAGE_TAKEN_DELTA_WEIGHT,
-                 hitcount_delta_w=HITCOUNT_DELTA_WEIGHT,
-                 ammo_delta_w=AMMO_DELTA_WEIGHT,
-                 movement_w=MOVEMENT_W,
+                 damage_taken_delta_weight=DAMAGE_TAKEN_DELTA_WEIGHT,
+                 damage_count_delta_weight=DAMAGECOUNT_DELTA_WEIGHT,
+                 ammo_delta_weight=AMMO_DELTA_WEIGHT,
+                 movement_weight=MOVEMENT_WEIGHT,
                  logging=False,
                  render=False,
                  hd=False):
@@ -38,16 +38,16 @@ class GymEnv(Env):
         # Create a vector list represent the actions.
         self.actions = np.identity(n_actions, dtype=np.uint8)
 
-        # Game Variables : HEALTH, DAMAGE_TAKEN, HITCOUNT, SELECTED_WEAPON_AMMO
+        # Game Variables : HEALTH DAMAGE_TAKEN, DAMAGE_COUNT, SELECTED_WEAPON_AMMO
         self.damage_taken = 0
-        self.hitcount = 0
+        self.damage_count = 0
         self.ammo = 52
 
         # Reward Shaping Weight
-        self.movement_w = movement_w
-        self.damage_taken_delta_w = damage_taken_delta_w
-        self.hitcount_delta_w = hitcount_delta_w
-        self.ammo_delta_w = ammo_delta_w
+        self.movement_weight = movement_weight
+        self.damage_taken_delta_weight = damage_taken_delta_weight
+        self.damage_count_delta_weight = damage_count_delta_weight
+        self.ammo_delta_weight = ammo_delta_weight
 
         # Render frame configuration
         if not render:
@@ -83,7 +83,7 @@ class GymEnv(Env):
 
             # Reward Shaping
             game_variables = state.game_variables
-            health, damage_taken, hitcount, ammo = game_variables
+            health, damage_taken, damage_count, ammo = game_variables
 
             # Calculate Rewards Delta
             # sd=10dp & d=20dp => -20 + 10 = -10
@@ -93,20 +93,20 @@ class GymEnv(Env):
 
             # 0 & 1 = 1 - 0 = 1
             # Make understand the agent that they have to shoot at the targets
-            hitcount_delta = hitcount - self.hitcount
-            self.hitcount = hitcount
+            damage_count_delta = damage_count - self.damage_count
+            self.damage_count = damage_count
 
             # 60 & 59 => 59 - 60 => -1
             # Make understand the agent that it is necessary to avoid shooting in the void
             ammo_delta = ammo - self.ammo
             self.ammo = ammo
 
-            movement_reward = game_reward * self.movement_w
-            damage_reward = damage_taken_delta * self.damage_taken_delta_w
-            hitcount_reward = hitcount_delta * self.hitcount_delta_w
-            ammo_reward = ammo_delta * self.ammo_delta_w
+            movement_reward = game_reward * self.movement_weight
+            damage_reward = damage_taken_delta * self.damage_taken_delta_weight
+            damage_count_reward = damage_count_delta * self.damage_count_delta_weight
+            ammo_reward = ammo_delta * self.ammo_delta_weight
 
-            reward = movement_reward + damage_reward + hitcount_reward + ammo_reward
+            reward = movement_reward + damage_reward + damage_count_reward + ammo_reward
 
             if self.logging:
                 print('##########################')
@@ -114,10 +114,10 @@ class GymEnv(Env):
                 print(f'Health {health}')
                 print(f'Ammo Left: {ammo}')
                 print(f'Damage Taken: {damage_taken}')
-                print(f'Hitcount: {hitcount}')
+                print(f'Damagecount: {damage_count}')
                 print(f'Movement Reward: {movement_reward}')
                 print(f'Damage Taken Reward: {damage_reward}')
-                print(f'Hitcount Reward: {hitcount_reward}')
+                print(f'Damagecount Reward: {damage_count_reward}')
                 print(f'Ammo Reward: {ammo_reward}')
                 print(f'Total Reward: {reward}')
                 print('##########################')
@@ -126,7 +126,7 @@ class GymEnv(Env):
                 "ammo": ammo,
                 "health": health,
                 "damage_taken": damage_taken,
-                "hitcount": hitcount
+                "damage_count": damage_count
             }
 
         else:
@@ -139,7 +139,7 @@ class GymEnv(Env):
     def reset(self):
         # Reset Games Variables before start a new game
         self.damage_taken = 0
-        self.hitcount = 0
+        self.damage_count = 0
         self.ammo = 52
         self.game.new_episode()
         screen = self.game.get_state().screen_buffer

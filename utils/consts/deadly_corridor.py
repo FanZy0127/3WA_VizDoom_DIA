@@ -1,7 +1,8 @@
 SCENARIO_PATH = 'utils/scenarii/deadly_corridor_doom_skill_3.cfg'  # Game Scenario Path
-LOG_DIR = 'logs/log_deadly_corridor'  # Tensorboard Log Directory
-CHECKPOINT_DIR = 'train/train_deadly_corridor'  # Checkpoint Directory
-MODEL_PATH = 'utils/models/deadly_corridor/curriculum_3/best_model_370000.zip'  # Model Path
+LOG_DIR = 'logs/log_deadly_corridor/curriculum_1'  # Tensorboard Log Directory
+CHECKPOINT_DIR = 'train/train_deadly_corridor/curriculum_1'  # Checkpoint Directory
+MODEL_PATH = 'utils/models/deadly_corridor/curriculum_1/best_model_400000.zip'  # Model Path
+# MODEL_PATH = 'utils/models/deadly_corridor/curriculum_4/best_model_400000.zip'  # Model Path
 MODEL_NAME = 'RewardingGymEnvModel'  # Model Name
 N_ACTIONS = 7
 IS_REWARD_SHAPED = True  # Is the reward shaped ?

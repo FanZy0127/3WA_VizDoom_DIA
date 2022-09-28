@@ -1,7 +1,7 @@
 SCENARIO_PATH = 'utils/scenarii/health_gathering.cfg'  # Game Scenario Path
 LOG_DIR = 'logs/log_health_gathering'  # Tensorboard Log Directory
 CHECKPOINT_DIR = 'train/train_health_gathering'  # Checkpoint Directory
-MODEL_PATH = 'utils/models/health_gathering_2709'  # Model Path
+MODEL_PATH = 'utils/models/health_gathering/best_model_100000.zip'  # Model Path
 MODEL_NAME = 'BasicGymEnvModel'  # Model Name
 N_ACTIONS = 3
 IS_REWARD_SHAPED = False  # Is the reward shaped?
